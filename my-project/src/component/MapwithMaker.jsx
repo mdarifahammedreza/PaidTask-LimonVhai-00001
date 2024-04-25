@@ -41,6 +41,7 @@ function MapWithMarker() {
   const [name, setName] = useState("");
   const [longitude, setLongitude] = useState("");
   const [latitude, setLatitude] = useState("");
+  const [marker, setMarker] = useState(null);
 
   /** @type React.MutableRefObject<HTMLInputElement> */
   const originRef = useRef();
@@ -79,10 +80,13 @@ function MapWithMarker() {
   const handleSubmit = (event) => {
     event.preventDefault();
     // Here you can access the state variables 'name', 'longitude', and 'latitude' to use the submitted data
-    console.log("Name:", name);
-    console.log("Longitude:", longitude);
-    console.log("Latitude:", latitude);
 
+    const newLat = parseFloat(latitude);
+    const newLng = parseFloat(longitude);
+    setMarker({
+      lat: newLat,
+      lng: newLng,
+    });
     // Reset form fields
     setName("");
     setLongitude("");
@@ -98,18 +102,33 @@ function MapWithMarker() {
       flexDirection="column"
       alignItems="center"
       h="100vh"
-      w="100vw">
+      w="100vw"
+    >
       <Box position="absolute" left={0} top={0} h="100%" w="100%">
         {/* Google Map Box */}
         <GoogleMap
           mapContainerStyle={{ width: "100%", height: "100%" }}
           center={center}
           zoom={10}
-          onLoad={(map) => setMap(map)}>
+          onLoad={(map) => setMap(map)}
+        >
           <Marker position={center} />
           {directionsResponse && (
             <DirectionsRenderer directions={directionsResponse} />
           )}
+          {markers.map((marker, index) => (
+            <Marker
+              key={index} // Important for React lists
+              position={marker}
+              onClick={() => setSelectedMarker(marker)}
+            >
+              {selectedMarker === marker && (
+                <InfoWindow onCloseClick={() => setSelectedMarker(null)}>
+                  <div>{marker.name}</div>
+                </InfoWindow>
+              )}
+            </Marker>
+          ))}
         </GoogleMap>
       </Box>
       <Box
@@ -119,7 +138,8 @@ function MapWithMarker() {
         bgColor="white"
         shadow="base"
         minW="container.md"
-        zIndex="1">
+        zIndex="1"
+      >
         <HStack spacing={2} justifyContent="space-between">
           <Box flexGrow={1}>
             <Autocomplete>
@@ -168,16 +188,19 @@ function MapWithMarker() {
         bgColor="white"
         shadow="base"
         minW="container.md"
-        zIndex="1">
+        zIndex="1"
+      >
         <div>
           <button
             className="btn"
-            onClick={() => document.getElementById("my_modal_5").showModal()}>
+            onClick={() => document.getElementById("my_modal_5").showModal()}
+          >
             Search location
           </button>
           <dialog
             id="my_modal_5"
-            className="modal modal-bottom sm:modal-middle">
+            className="modal modal-bottom sm:modal-middle"
+          >
             <div className="modal-box">
               <h3 className="font-bold text-lg">Please input the info:</h3>
               <div className="modal-action">
