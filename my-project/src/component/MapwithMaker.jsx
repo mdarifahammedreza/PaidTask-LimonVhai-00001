@@ -41,7 +41,9 @@ function MapWithMarker() {
   const [name, setName] = useState("");
   const [longitude, setLongitude] = useState("");
   const [latitude, setLatitude] = useState("");
-  const [marker, setMarker] = useState(null);
+  // const [marker, setMarker] = useState(null);
+  const [markers, setMarkers] = useState([]); // Array to store markers
+  const [selectedMarker, setSelectedMarker] = useState(null);
 
   /** @type React.MutableRefObject<HTMLInputElement> */
   const originRef = useRef();
@@ -83,10 +85,8 @@ function MapWithMarker() {
 
     const newLat = parseFloat(latitude);
     const newLng = parseFloat(longitude);
-    setMarker({
-      lat: newLat,
-      lng: newLng,
-    });
+    // Update markers state
+    setMarkers([...markers, { lat: newLat, lng: newLng, name: name }]);
     // Reset form fields
     setName("");
     setLongitude("");
