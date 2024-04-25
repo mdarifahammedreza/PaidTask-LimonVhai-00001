@@ -29,6 +29,13 @@ const center = {
 };
 
 function MapWithMarker() {
+  const Save_in_Local = (key, Data) => {
+    localStorage.setItem(key, JSON.stringify(Data));
+  };
+  const get_from_Local = (key) => {
+    const Data = localStorage.getItem(key);
+    return JSON.parse(Data.value);
+  };
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: "AIzaSyANM-S8csQhiY7y2RGmzCD1PDN0dIxFzlY",
     libraries: ["places"],
@@ -42,7 +49,8 @@ function MapWithMarker() {
   const [longitude, setLongitude] = useState("");
   const [latitude, setLatitude] = useState("");
   // const [marker, setMarker] = useState(null);
-  const [markers, setMarkers] = useState([]); // Array to store markers
+  const [markers, setMarkers] = useState([...get_from_Local("Map_Log")]);
+  // Array to store markers
   const [selectedMarker, setSelectedMarker] = useState(null);
 
   /** @type React.MutableRefObject<HTMLInputElement> */
@@ -91,7 +99,7 @@ function MapWithMarker() {
     setName("");
     setLongitude("");
     setLatitude("");
-
+    Save_in_Local("Map_Log", markers);
     // Close the modal (if needed)
     document.getElementById("my_modal_5").close();
   };
