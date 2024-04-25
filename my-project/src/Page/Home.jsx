@@ -1,12 +1,5 @@
-import BlogFrom from "../component/BlogFrom";
- 
-
 const Home = () => {
-  return (
-    <div>
-      <BlogFrom />
-    </div>
-  );
+  return <div></div>;
 };
 
 export default Home;
