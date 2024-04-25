@@ -1,10 +1,10 @@
-import Form from "../component/Form";
+import BlogFrom from "../component/BlogFrom";
+ 
 
 const Home = () => {
   return (
     <div>
-      
-      <Form />
+      <BlogFrom />
     </div>
   );
 };
