@@ -1,8 +1,44 @@
-import { FaFacebook } from "react-icons/fa6";
-import { FaGithub } from "react-icons/fa";
-import { AiOutlineGoogle } from "react-icons/ai";
-import { Link } from "react-router-dom";
 const Form = () => {
+  const HandleSubmit = (e) => {
+    e.preventDefault();
+    const FirstName = e.target.firstName.value;
+    const LastName = e.target.lastName.value;
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+    e.target.reset();
+    const data = {
+      FirstName: FirstName,
+      LastName: LastName,
+      email: email,
+      password: password,
+    };
+
+    if (Save_in_Local("UserData", data)) {
+      alert("Item save successfully ");
+    } else console.log(Save_in_Local("UserData", data));
+
+    const SaveData = Get_From_Local("UserData");
+    console.log("SaveData", SaveData);
+  };
+
+  const Save_in_Local = (Key, Data) => {
+    try {
+      localStorage.setItem(Key, JSON.stringify(Data));
+      console.log(Key, Data);
+      return true;
+    } catch (error) {
+      return error;
+    }
+  };
+  const Get_From_Local = (Key) => {
+    try {
+      const Data = localStorage.getItem(Key);
+      return JSON.parse(Data);
+    } catch (error) {
+      return error;
+    }
+  };
+
   return (
     <div>
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 ">
@@ -11,7 +47,7 @@ const Form = () => {
             Registration Form
           </h1>
           <div className="divider divider-info"></div>
-          <form>
+          <form onSubmit={HandleSubmit}>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
               <div className="mb-4">
                 <label
