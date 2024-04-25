@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@react-google-maps/api": "^2.19.3",
     "@udecode/plate-alignment": "^31.0.0",
     "@udecode/plate-autoformat": "^31.0.0",
     "@udecode/plate-basic-marks": "^31.0.0",
@@ -48,6 +49,7 @@
     "@udecode/plate-table": "^31.4.1",
     "@udecode/plate-toggle": "^31.4.0",
     "@udecode/plate-trailing-block": "^31.0.0",
+    "google-map-react": "^2.2.1",
     "jodit-react": "^4.0.30",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.4",
